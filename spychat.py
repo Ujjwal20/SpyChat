@@ -14,26 +14,24 @@ print "Hello! Let\'s get started"
 question = "Do you want to continue as " + spy_salutation + " " + spy_name + " (Y/N)? \n  "
 existing = raw_input(question)
 def add_status(current_status_message):
-
     updated_status_message = None
-
-    
+#Check for current status
     if current_status_message != None:
         print 'Your current status message is %s \n' % (current_status_message)
     else:
         print 'You don\'t have any status message currently \n'
 
-   
+  #selecting old status 
     default = raw_input("Do you want to select from the older status (Y/N)? ")
-
+#new status input
     if default == "N":
         new_status_message = raw_input("What status message do you want to set? ")
 
-        
+      #status validity check  
         if len(new_status_message) > 0:
             status.append(new_status_message)
             updated_status_message = new_status_message
-
+#choose from old status
     elif default == 'Y':
         item_position = 1
 
@@ -56,6 +54,32 @@ def add_status(current_status_message):
         print 'You did not update your status message'
 
     return updated_status_message
+
+friends = []
+def add_friend():
+
+    new_friend = {
+        'name': '',
+        'salutation': '',
+        'age': 0,
+        'rating': 0.0
+    }
+    new_friend['name'] = raw_input("Please add your friend's name: ")
+    new_friend['salutation'] = raw_input("Are they Mr. or Ms.?: ")
+
+    new_friend['name'] = new_friend['salutation'] + " " + new_friend['name']
+
+    new_friend['age'] = input("Age?")
+
+    new_friend['rating'] = input("Spy rating?")
+   
+    if len(new_friend['name']) > 0 and new_friend['age'] > 12 and isstring(new_friend['name']) :
+        friends.append(new_friend)
+        print 'Friend Added!'
+    else:
+        print 'Sorry! Invalid entry. We can\'t add spy with the details you provided'
+
+    return len(friends)
 
 
 
@@ -80,7 +104,10 @@ def start_chat(spy_name,spy_age, spy_rating):
             menu_choices = "What do you want to do? \n 1. Add a status update \n 2. Add a friend \n 3. Send a secret message \n 4. Read a secret message \n 5. Read Chats from a user \n 6. Close Application \n"
             menu_choice = input(menu_choices)
             if menu_choice == 1:
-                current_status_message = add_status(current_status_message)          
+                current_status_message = add_status(current_status_message)
+            elif menu_choice == 2:
+                number_of_friends = add_friend()
+                print 'You have %d friends' % (number_of_friends)    
             else:
                 show_menu = False
    else:
