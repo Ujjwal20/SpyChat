@@ -23,7 +23,13 @@ friend_three = Spy('Atala', 'Jr', 19, 4.95)
 friends = [friend_one, friend_two, friend_three]
 
 class ChatMessage:
-  def __init__(self, message, sent_by_me):
+  def __init__(self, sender, message, sent_by_me):
+    self.sender = sender
     self.message = message
     self.time = datetime.now()
     self.sent_by_me = sent_by_me
+    
+chat_one = ChatMessage("Vipanshu","Danger",False)
+chat_two = ChatMessage("Matta","Mission Complete",True)
+chat_three =ChatMessage("Atala","Help",False)
+chats = [chat_one,chat_two,chat_three]
