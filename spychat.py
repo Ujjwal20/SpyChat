@@ -8,6 +8,9 @@ Created on Sat Jan 20 10:32:52 2018
 #isstring to check whether the name is string
 from spy_details import spy_name,spy_salutation,spy_rating,spy_age,spy_online,status
 from isstring import isstring
+from steganography.steganography import Steganography
+from datetime import datetime
+
 
 #First message
 print "Hello! Let\'s get started"
@@ -64,6 +67,7 @@ def add_friend():
         'age': 0,
         'rating': 0.0
     }
+    #Adding new friend
     new_friend['name'] = raw_input("Please add your friend's name: ")
     new_friend['salutation'] = raw_input("Are they Mr. or Ms.?: ")
 
@@ -80,6 +84,40 @@ def add_friend():
         print 'Sorry! Invalid entry. We can\'t add spy with the details you provided'
 
     return len(friends)
+
+def select_a_friend():
+    item_number = 0
+    #Listing out friends
+    for friend in friends:
+        print '%d. %s aged %d with rating %.2f is online' % (item_number +1, friend['name'],
+                                                   friend['age'],
+                                                   friend['rating'])
+        item_number = item_number + 1
+
+    friend_choice = input("Choose from your friends")
+
+    friend_choice_position = friend_choice - 1
+
+    return friend_choice_position
+
+def send_message():
+#Choosing friend
+    friend_choice = select_a_friend()
+#secret message in an image
+    original_image = raw_input("What is the name of the image?")
+    output_path = "output.jpg"
+    text = raw_input("What do you want to say? ")
+    Steganography.encode(original_image, output_path, text)
+
+    new_chat = {
+        "message": text,
+        "time": datetime.now(),
+        "sent_by_me": True
+    }
+
+    friends[friend_choice]['chats'].append(new_chat)
+
+    print "Your secret message image is ready!"
 
 
 
@@ -107,7 +145,9 @@ def start_chat(spy_name,spy_age, spy_rating):
                 current_status_message = add_status(current_status_message)
             elif menu_choice == 2:
                 number_of_friends = add_friend()
-                print 'You have %d friends' % (number_of_friends)    
+                print 'You have %d friends' % (number_of_friends)  
+            elif menu_choice == 3:
+                send_message()
             else:
                 show_menu = False
    else:
