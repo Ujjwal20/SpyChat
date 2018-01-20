@@ -9,6 +9,7 @@ Created on Sat Jan 20 10:32:52 2018
 from spy_details import spy,Spy,ChatMessage,friends
 from isstring import isstring
 from steganography.steganography import Steganography
+import csv
 
 
 
@@ -73,9 +74,14 @@ def add_friend():
         frd = Spy(naam,salutation,age,rating)
         friends.append(frd)
         print 'Friend Added!'
+        with open('friends.csv', 'a') as friends_data:
+          writer = csv.writer(friends_data)
+          writer.writerow([frd.spy_name,frd.spy_salutation,frd.spy_age,frd.spy_rating])
     else:
         print 'Sorry! Invalid entry. We can\'t add spy with the details you provided'
-
+    
+    
+  
     return len(friends)
 
 def select_a_friend():
@@ -103,6 +109,9 @@ def send_message():
     Steganography.encode(original_image, output_path, text)
 
     new_chat = ChatMessage(text,True)
+    with open('chat.csv', 'a') as chat_data:
+          writer = csv.writer(chat_data)
+          writer.writerow([new_chat.message])
 
     friends[friend_choice]['chats'].append(new_chat)
 
@@ -117,6 +126,9 @@ def read_message():
     secret_text = Steganography.decode(output_path)
 
     new_chat = ChatMessage(secret_text,False)
+    with open('chat.csv', 'a') as chat_data:
+          writer = csv.writer(chat_data)
+          writer.writerow([new_chat.message])
 
     friends[sender]['chats'].append(new_chat)
     print "Your secret message has been saved!"
