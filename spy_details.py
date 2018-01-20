@@ -6,11 +6,8 @@ Created on Sat Jan 20 10:31:42 2018
 """
 
 spy_name = 'Chaudhary'
-
 spy_salutation = 'Mr.'
-
 spy_age = 20
-
 spy_rating = 4
-
 spy_online = True
+status =["Jai Hind"]
